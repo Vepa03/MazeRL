@@ -3,27 +3,6 @@ using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 
-/// <summary>
-/// Labirentte rastgele konumlanan hedefi (Goal) bulmaya çalışan küp ajan.
-///
-/// Aksiyonlar (1 discrete branch, 5 seçenek):
-///   0 = bekle, 1 = ileri, 2 = geri, 3 = sola dön, 4 = sağa dön
-///
-/// Gözlemler:
-///   - RayPerceptionSensor3D (Inspector'dan eklenir, Wall ve Goal tag'lerini görür)
-///   - Vector observation (8 adet, Behavior Parameters > Space Size = 8):
-///       ajanın yerel konumu (x,z), hedefin yerel konumu (x,z),
-///       ajanın baktığı yön (x,z), ajanın yerel hızı (x,z)
-///
-/// Ödüller:
-///   +1.0   hedefe ulaşınca (bölüm biter)
-///   -0.05  duvara her çarpışta (ilk temas)
-///   -0.001 duvara sürtünürken her fizik adımında
-///   -1/MaxStep her adımda (hızlı olmaya teşvik)
-///
-/// ÖNEMLİ: Tüm konumlar "localPosition" ile kullanılır, böylece
-/// TrainingArea prefab'ını çoğaltarak paralel eğitim yapabilirsiniz.
-/// </summary>
 [RequireComponent(typeof(Rigidbody))]
 public class MazeAgent : Agent
 {
