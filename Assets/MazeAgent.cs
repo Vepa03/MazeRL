@@ -35,7 +35,7 @@ public class MazeAgent : Agent
 
     public override void OnEpisodeBegin()
     {
-        // Ajanı sıfırla
+        
         rb.linearVelocity = Vector3.zero;      // Unity 6. Unity 2022 kullanıyorsanız: rb.velocity
         rb.angularVelocity = Vector3.zero;
         transform.localPosition = new Vector3(
@@ -43,7 +43,7 @@ public class MazeAgent : Agent
             Random.Range(agentSpawnZ.x, agentSpawnZ.y));
         transform.localRotation = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
 
-        // Hedefi rastgele yerleştir
+        
         goal.localPosition = new Vector3(
             Random.Range(goalSpawnX.x, goalSpawnX.y), 0.4f,
             Random.Range(goalSpawnZ.x, goalSpawnZ.y));
@@ -76,14 +76,14 @@ public class MazeAgent : Agent
             case 4: turn = 1f;  break;
         }
 
-        // Fizik tabanlı hareket (duvarlardan geçmez)
+        
         rb.MovePosition(rb.position + moveDir * moveSpeed * Time.fixedDeltaTime);
         rb.MoveRotation(rb.rotation * Quaternion.Euler(0f, turn * turnSpeed * Time.fixedDeltaTime, 0f));
 
-        // Zaman cezası: ajanı hızlı olmaya iter
+        
         if (MaxStep > 0) AddReward(-1f / MaxStep);
 
-        // Güvenlik: ajan bir şekilde aşağı düşerse
+        
         if (transform.localPosition.y < -1f)
         {
             SetReward(-1f);
@@ -110,8 +110,7 @@ public class MazeAgent : Agent
         if (collision.gameObject.CompareTag("Wall")) AddReward(-0.001f);
     }
 
-    /// <summary>Klavye ile test: W/S ileri-geri, A/D dönüş.
-    /// Behavior Type = Heuristic Only yapıp Play'e basın.</summary>
+    
     public override void Heuristic(in ActionBuffers actionsOut)
     {
         var d = actionsOut.DiscreteActions;
